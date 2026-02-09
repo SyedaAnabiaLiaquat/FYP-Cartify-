@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Cartify</title>
+    <link rel="stylesheet" href="login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y='.9em' font-size='90'>🛒</text></svg>">
+</head>
+<body>
+    <div class="login-container">
+        <!-- Background Design Elements -->
+        <div class="bg-shape shape-1"></div>
+        <div class="bg-shape shape-2"></div>
+        <div class="bg-shape shape-3"></div>
+        
+        <!-- Main Login Card -->
+        <div class="login-card">
+            <!-- Logo Section -->
+            <div class="logo-section">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h1 class="logo-text">Cartify</h1>
+                </div>
+                <p class="tagline">Smart Shopping Trolley System</p>
+            </div>
+
+            <!-- Welcome Section -->
+            <div class="welcome-section">
+                <h2 class="welcome-title">Welcome Back!</h2>
+                <p class="welcome-subtitle">Please enter your details to access your smart shopping dashboard</p>
+            </div>
+
+            <!-- Login Form -->
+            <form class="login-form" id="loginForm">
+                <!-- Name Input -->
+                <div class="form-group">
+                    <label for="name" class="form-label">
+                        <i class="fas fa-user"></i>
+                        Full Name
+                    </label>
+                    <div class="input-group">
+                        <input 
+                            type="text" 
+                            id="name" 
+                            class="form-input"
+                            placeholder="Enter your full name"
+                            autocomplete="name"
+                            required>
+                        <div class="input-icon">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                    </div>
+                    <div class="error-message" id="nameError"></div>
+                </div>
+
+                <!-- Phone Input -->
+                <div class="form-group">
+                    <label for="phone" class="form-label">
+                        <i class="fas fa-phone"></i>
+                        Phone Number
+                    </label>
+                    <div class="input-group">
+                        <input 
+                            type="tel" 
+                            id="phone" 
+                            class="form-input"
+                            placeholder="Enter your phone number"
+                            autocomplete="tel"
+                            pattern="[0-9]{10,15}"
+                            required>
+                        <div class="input-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                    </div>
+                    <div class="error-message" id="phoneError"></div>
+                </div>
+
+                <!-- Remember Me Checkbox -->
+                <div class="remember-me">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="rememberMe" class="checkbox-input">
+                        <span class="checkbox-custom"></span>
+                        <span class="checkbox-text">Remember me on this device</span>
+                    </label>
+                </div>
+
+                <!-- Login Button -->
+                <button type="submit" class="login-btn" id="loginBtn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Login to Cartify</span>
+                        <a href="Home.html"></a>
+
+                    <div class="spinner" id="loginSpinner"></div>
+                </button>
+
+                <!-- Form Footer -->
+                <div class="form-footer">
+                    <p>By logging in, you agree to our 
+                        <a href="#" class="footer-link">Terms of Service</a> and 
+                        <a href="#" class="footer-link">Privacy Policy</a>
+                    </p>
+                </div>
+            </form>
+
+            <!-- Demo Note -->
+            <div class="demo-note">
+                <div class="demo-icon">
+                    <i class="fas fa-info-circle"></i>
+                </div>
+                <p>This is a demo login. No backend required. Your data is stored locally.</p>
+            </div>
+        </div>
+
+        <!-- Feature Highlights -->
+        <div class="feature-highlights">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h3 class="feature-title">Smart Navigation</h3>
+                <p class="feature-desc">Obstacle detection for safe shopping</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-calculator"></i>
+                </div>
+                <h3 class="feature-title">Real-Time Billing</h3>
+                <p class="feature-desc">Instant bill updates as you shop</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3 class="feature-title">Fast Checkout</h3>
+                <p class="feature-desc">Skip queues with smart checkout</p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2024 Cartify Smart Shopping Trolley. Final Year Project.</p>
+            <p class="footer-contact">
+                <i class="fas fa-envelope"></i>
+                support@cartify.com
+                <span class="separator">|</span>
+                <i class="fas fa-phone"></i>
+                +1 (555) 123-4567
+            </p>
+        </footer>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal">
+            <div class="modal-icon success">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3 class="modal-title">Login Successful!</h3>
+            <p class="modal-message">Welcome back to Cartify. Redirecting to your dashboard...</p>
+            <div class="modal-progress">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="login.js"></script>
+</body>
+</html>

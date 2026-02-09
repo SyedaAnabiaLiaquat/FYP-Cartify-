@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartify - Smart Shopping Trolley</title>
+    <link rel="stylesheet" href="Home.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y='.9em' font-size='90'>🛒</text></svg>">
+</head>
+<body class="light-mode">
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <!-- Logo -->
+            <div class="nav-logo">
+                <div class="logo-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <h1 class="logo-text">Cartify</h1>
+            </div>
+
+            <!-- Navigation Menu -->
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="Home.html" class="nav-link active">
+                        <i class="fas fa-home"></i>
+                        <span data-i18n="nav.home">Home</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="Start-shoping-page.html" class="nav-link">
+                        <i class="fas fa-play-circle"></i>
+                        <span data-i18n="nav.startShopping">Start Shopping</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="Product-page.html" class="nav-link">
+                        <i class="fas fa-box"></i>
+                        <span data-i18n="nav.products">Products</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="Payment-Conf.html" class="nav-link">
+                        <i class="fas fa-calculator"></i>
+                        <span data-i18n="nav.liveBilling">Live Billing</span>
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Right Side Controls -->
+            <div class="nav-controls">
+                <!-- Language Selector -->
+                <div class="language-selector">
+                    <button class="language-btn" id="languageBtn">
+                        <i class="fas fa-globe"></i>
+                        <span>EN</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="language-dropdown" id="languageDropdown">
+                        <button class="language-option active" data-lang="en">
+                            <i class="fas fa-check"></i>
+                            English
+                        </button>
+                        <button class="language-option" data-lang="es">
+                            Urdu 
+                        </button>
+                        <button class="language-option" data-lang="fr">
+                            Sindhi
+                        </button>
+                        <button class="language-option" data-lang="de">
+                            Pashto
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Dark/Light Mode Toggle -->
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-sun"></i>
+                    <span class="theme-slider"></span>
+                </button>
+
+                <!-- User Profile -->
+                <div class="user-profile">
+                    <button class="user-btn" id="userBtn">
+                        <div class="user-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span class="user-name" id="userName">Guest</span>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <!-- Welcome Card -->
+                <div class="welcome-card">
+                    <div class="welcome-header">
+                        <h1 class="welcome-title">
+                            <span class="greeting">Welcome back,</span>
+                            <span class="user-display-name" id="userDisplayName">Guest</span>
+                            <span class="welcome-emoji">👋</span>
+                        </h1>
+                        <p class="welcome-time" id="welcomeTime"></p>
+                    </div>
+
+                    <div class="welcome-message">
+                        <h2 data-i18n="shopping.title">Ready for Smart Shopping?</h2>
+                        <p class="intro-text" data-i18n="shopping.subtitle">
+                            Cartify is a smart shopping system using barcode scanning and real-time billing. 
+                            Experience the future of shopping with our intelligent trolley system.
+                        </p>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <a href="Start-shoping-page.html" class="btn btn-primary btn-lg">
+                            <i class="fas fa-play-circle"></i>
+                            <span data-i18n="nav.startShopping">Start Shopping</span>
+                            <div class="btn-pulse"></div>
+                        </a>
+                        <a href="Product-page.html" class="btn btn-secondary btn-lg">
+                            <i class="fas fa-box"></i>
+                            <span data-i18n="nav.products">View Products</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Trolley Animation -->
+                <div class="trolley-animation-container">
+                    <div class="trolley-card">
+                        <div class="trolley-visual">
+                            <div class="trolley">
+                                <div class="trolley-body">
+                                    <div class="trolley-screen">
+                                        <div class="screen-content">
+                                            <span class="screen-text">Smart Cart</span>
+                                            <div class="barcode-scanner">
+                                                <div class="laser"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="trolley-wheels">
+                                    <div class="wheel"></div>
+                                    <div class="wheel"></div>
+                                </div>
+                            </div>
+                            <div class="obstacle-sensor">
+                                <div class="sensor-pulse"></div>
+                                <div class="sensor-icon">
+                                    <i class="fas fa-radar"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="trolley-info">
+                            <h3 data-i18n="trolley.features">Smart Features</h3>
+                            <ul class="feature-list">
+                                <li>
+                                    <i class="fas fa-barcode"></i>
+                                    <span data-i18n="feature.barcode">Barcode Scanning</span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-bolt"></i>
+                                    <span data-i18n="feature.billing">Real-Time Billing</span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-shield-alt"></i>
+                                    <span data-i18n="feature.obstacle">Obstacle Detection</span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-mobile-alt"></i>
+                                    <span data-i18n="feature.mobile">Mobile Integration</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <h2 class="section-title" data-i18n="section.howItWorks">How Cartify Works</h2>
+            <p class="section-subtitle" data-i18n="section.experience">Experience seamless shopping with our intelligent system</p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-barcode"></i>
+                    </div>
+                    <h3 data-i18n="feature.scan">Scan Products</h3>
+                    <p data-i18n="feature.scanDesc">Simply scan barcodes using the built-in scanner. Items are automatically added to your cart.</p>
+                    <div class="feature-badge" data-i18n="step.1">Step 1</div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3 data-i18n="feature.billing">Real-Time Billing</h3>
+                    <p data-i18n="feature.billingDesc">Watch your bill update instantly as you add items. No surprises at checkout!</p>
+                    <div class="feature-badge" data-i18n="step.2">Step 2</div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 data-i18n="feature.navigation">Smart Navigation</h3>
+                    <p data-i18n="feature.navigationDesc">The trolley detects obstacles and helps navigate through crowded aisles safely.</p>
+                    <div class="feature-badge" data-i18n="step.3">Step 3</div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h3 data-i18n="feature.checkout">Quick Checkout</h3>
+                    <p data-i18n="feature.checkoutDesc">Skip the queues! Pay directly from your cart and receive a digital receipt.</p>
+                    <div class="feature-badge" data-i18n="step.4">Step 4</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Preview -->
+    <section class="products-section">
+        <div class="container">
+            <h2 class="section-title" data-i18n="section.popularProducts">Popular Products</h2>
+            <p class="section-subtitle" data-i18n="section.startJourney">Start your smart shopping journey with these popular items</p>
+
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=400&h=300&fit=crop">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Fresh Milk</h3>
+                        <p class="product-price">RS 200</p>
+                       
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400&h=300&fit=crop" alt="Bread">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Whole Wheat Bread</h3>
+                        <p class="product-price">RS 120</p>
+                       
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=400&h=300&fit=crop" alt="Eggs">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Organic Eggs</h3>
+                        <p class="product-price">RS 320</p>
+                       
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=400&h=300&fit=crop" alt="Apples">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Fresh Apples</h3>
+                        <p class="product-price">RS 300</p>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <div class="footer-logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <h2 class="logo-text">Cartify</h2>
+                    </div>
+                    <p data-i18n="footer.description">Smart Shopping Trolley System<br>Final Year Project</p>
+                </div>
+
+                <div class="footer-links">
+                    <h3 data-i18n="footer.quickLinks">Quick Links</h3>
+                    <ul>
+                        <li><a href="Home.html" data-i18n="nav.home">Home</a></li>
+                        <li><a href="Start-shoping-page.html" data-i18n="nav.startShopping">Start Shopping</a></li>
+                        <li><a href="Product-page.html" data-i18n="nav.products">Products</a></li>
+                        <li><a href="Payment-Conf.html" data-i18n="nav.liveBilling">Live Billing</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h3 data-i18n="footer.features">Features</h3>
+                    <ul>
+                        <li><a href="#" data-i18n="feature.barcode">Barcode Scanning</a></li>
+                        <li><a href="#" data-i18n="feature.billing">Real-Time Billing</a></li>
+                        <li><a href="#" data-i18n="feature.obstacle">Obstacle Detection</a></li>
+                        <li><a href="#" data-i18n="feature.mobile">Mobile Integration</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h3 data-i18n="footer.contact">Contact</h3>
+                    <ul>
+                        <li><a href="mailto:support@cartify.com">support@cartify.com</a></li>
+                        <li><a href="tel:+15551234567">+1 (555) 123-4567</a></li>
+                        <li data-i18n="footer.address">Smart Shopping<br>University Campus</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p data-i18n="footer.copyright">© 2024 Cartify Smart Shopping Trolley. All rights reserved.</p>
+                <p data-i18n="footer.project">Final Year Project - Department of Information Technology</p>
+            </div>
+        </div>
+    </footer>
+     
+    <!-- Add Language Selector Script FIRST -->
+    
+    <script src="Home.js"></script>
+    
+</body>
+</html>

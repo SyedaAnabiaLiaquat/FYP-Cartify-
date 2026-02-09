@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Confirmation - Cartify</title>
+    <link rel="stylesheet" href="Payment-Conf.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Cartify</span>
+            </div>
+            <div class="nav-links">
+                <a href="Start-shoping-page.html" class="nav-link">
+                    <i class="fas fa-store"></i> Store
+                </a>
+                <a href="Checkout.html" class="nav-link">
+                    <i class="fas fa-receipt"></i> Cart
+                </a>
+                <a href="#" class="nav-link active">
+                    <i class="fas fa-check-circle"></i> Confirmation
+                </a>
+                <div class="secure-badge">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Payment Complete</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Success Header -->
+        <div class="success-header">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h1>Payment Successful!</h1>
+            <p class="subtitle">Your order has been confirmed and is being processed</p>
+            <div class="success-badges">
+                <span class="badge">
+                    <i class="fas fa-bolt"></i> Order Confirmed
+                </span>
+                <span class="badge">
+                    <i class="fas fa-truck"></i> Preparing for Delivery
+                </span>
+                <span class="badge">
+                    <i class="fas fa-clock"></i> Estimated: 2-4 Hours
+                </span>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Left Column: Receipt -->
+            <div class="receipt-section">
+                <!-- Receipt Header -->
+                <div class="receipt-header">
+                    <div class="store-info">
+                        <h2><i class="fas fa-shopping-cart"></i> Cartify Store</h2>
+                        <p>Order Confirmation Receipt</p>
+                    </div>
+                    <div class="receipt-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-hashtag"></i>
+                            <div>
+                                <span class="label">Order #</span>
+                                <span class="value" id="orderNumber">CTF-2024-00123</span>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <div>
+                                <span class="label">Date & Time</span>
+                                <span class="value" id="orderDateTime">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Payment Summary -->
+                <div class="payment-summary">
+                    <h3><i class="fas fa-file-invoice-dollar"></i> Payment Summary</h3>
+                    <div class="summary-grid">
+                        <div class="summary-row">
+                            <span>Subtotal</span>
+                            <span id="subtotalAmount">Rs 0</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Delivery Fee</span>
+                            <span id="deliveryFee">Rs 150</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Tax (13%)</span>
+                            <span id="taxAmount">Rs 0</span>
+                        </div>
+                        <div class="summary-row discount">
+                            <span>Discount (5%)</span>
+                            <span id="discountAmount">- Rs 0</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Grand Total</span>
+                            <span id="grandTotal">Rs 0</span>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <!-- Receipt Footer -->
+                <div class="receipt-footer">
+                    <div class="thank-you">
+                        <i class="fas fa-heart"></i>
+                        <span>Thank you for shopping with Cartify!</span>
+                    </div>
+                    <div class="store-contact">
+                        <p><i class="fas fa-phone"></i> Customer Support: +92 51 1234567</p>
+                        <p><i class="fas fa-envelope"></i> support@cartify.pk</p>
+                    </div>
+                    <div class="receipt-notice">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Please keep this receipt for your records. You can print or save as PDF.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Actions & SMS -->
+            <div class="actions-section">
+                <!-- SMS Simulation -->
+                <div class="sms-simulation">
+                    <div class="sms-header">
+                        <h3><i class="fas fa-sms"></i> SMS Confirmation</h3>
+                        <div class="sms-status" id="smsStatus">
+                            <i class="fas fa-check-circle"></i>
+                            <span>SMS Sent</span>
+                        </div>
+                    </div>
+                    
+                    <div class="sms-preview">
+                        <div class="sms-phone">
+                            <i class="fas fa-mobile-alt"></i>
+                            <span id="smsPhoneNumber">+92 300 1234567</span>
+                        </div>
+                        <div class="sms-content">
+                            <div class="sms-text" id="smsMessage">
+                                <!-- SMS message will be loaded here -->
+                            </div>
+                            <div class="sms-time" id="smsTime"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="sms-controls">
+                        <button class="btn btn-sms" id="sendSMSBtn">
+                            <i class="fas fa-paper-plane"></i> Send SMS Again
+                        </button>
+                        <button class="btn btn-edit" id="editSMSNumber">
+                            <i class="fas fa-edit"></i> Edit Phone Number
+                        </button>
+                    </div>
+                    
+                    <div class="sms-info">
+                        <i class="fas fa-info-circle"></i>
+                        <span>SMS receipts are sent automatically to the registered phone number</span>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <h3><i class="fas fa-print"></i> Print & Share</h3>
+                    <div class="buttons-grid">
+                        <button class="action-btn print-btn" id="printBillBtn">
+                            <div class="btn-icon">
+                                <i class="fas fa-print"></i>
+                            </div>
+                            <div class="btn-content">
+                                <span class="btn-title">Print Bill</span>
+                                <span class="btn-desc">Get a physical copy</span>
+                            </div>
+                        </button>
+                        
+                        <button class="action-btn sms-btn" id="sendBillSMSBtn">
+                            <div class="btn-icon">
+                                <i class="fas fa-sms"></i>
+                            </div>
+                            <div class="btn-content">
+                                <span class="btn-title">Send Bill via SMS</span>
+                                <span class="btn-desc">Share via text message</span>
+                            </div>
+                        </button>
+                        
+                       
+                      
+                    </div>
+                </div>
+
+                        <div class="step-item">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <div class="step-title">Contact Support</div>
+                                <div class="step-desc">Call +92 51 1234567 for any queries</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="loading-spinner">
+                <i class="fas fa-spinner fa-spin"></i>
+            </div>
+            <h3>Sending SMS</h3>
+            <p>Please wait while we send confirmation to your phone</p>
+            <div class="loading-progress">
+                <div class="progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Toast -->
+    <div class="success-toast" id="successToast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">SMS sent successfully!</span>
+    </div>
+
+    <!-- Notifications Container -->
+    <div id="notificationContainer"></div>
+
+    <script src="Payment-Conf.js"></script>
+</body>
+</html>

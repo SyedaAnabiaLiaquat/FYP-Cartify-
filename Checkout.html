@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Cartify</title>
+    <link rel="stylesheet" href="Checkout.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="checkout-header">
+            <div class="logo">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Cartify Checkout</span>
+            </div>
+        </div>
+
+        <!-- Checkout Card -->
+        <div class="checkout-card">
+            <h2 class="checkout-title">
+                <i class="fas fa-receipt"></i> Order Summary
+            </h2>
+            
+            <!-- Order Items -->
+            <div class="order-items" id="orderItems">
+                <!-- Items will be loaded from JavaScript -->
+                <div class="empty-cart">
+                    <i class="fas fa-shopping-basket"></i>
+                    <h3>Your cart is empty</h3>
+                    <p>Add products from shopping page</p>
+                </div>
+            </div>
+
+            <!-- Total Amount -->
+            <div class="total-section">
+                <div class="total-label">Total Amount</div>
+                <div class="total-amount" id="totalAmount">Rs 0</div>
+            </div>
+
+            <!-- Pay Now Button -->
+            <button class="pay-btn" id="payNowBtn">
+                <i class="fas fa-lock"></i>
+                Pay Now
+            </button>
+        </div>
+    </div>
+
+    <script src="Checkout.js"></script>
+</body>
+</html>
