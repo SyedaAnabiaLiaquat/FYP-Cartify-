@@ -1,622 +1,280 @@
-// language-selector.js - Simplified Integration
-
+// FINAL WORKING LANGUAGE MANAGER
 class LanguageManager {
     constructor() {
-        this.currentLang = 'en';
-        this.languages = {
+        this.translations = {
             'en': {
-                name: 'English',
-                dir: 'ltr',
-                translations: {
-                    // Navigation
-                    'nav.home': 'Home',
-                    'nav.startShopping': 'Start Shopping',
-                    'nav.products': 'Products',
-                    'nav.liveBilling': 'Live Billing',
-                    'nav.scanner': 'Scanner',
-                    'nav.checkout': 'Checkout',
-                    
-                    // Shopping Page
-                    'shopping.title': 'Smart Shopping Scanner',
-                    'shopping.subtitle': 'Scan products to add them to your cart instantly',
-                    'shopping.startScanner': 'Start Scanner',
-                    'shopping.liveCart': 'Live Cart',
-                    'shopping.scannedItems': 'Scanned Items',
-                    'shopping.totalItems': 'Items',
-                    'shopping.totalAmount': 'Total',
-                    'shopping.clearCart': 'Clear Cart',
-                    'shopping.proceedCheckout': 'Proceed to Checkout',
-                    'shopping.emptyCart': 'No items scanned yet',
-                    
-                    // Checkout Page
-                    'checkout.title': 'Cartify Checkout',
-                    'checkout.orderSummary': 'Order Summary',
-                    'checkout.subtotal': 'Subtotal',
-                    'checkout.deliveryFee': 'Delivery Fee',
-                    'checkout.tax': 'Tax (13%)',
-                    'checkout.totalAmount': 'Total Amount',
-                    'checkout.customerInfo': 'Customer Information',
-                    'checkout.fullName': 'Full Name',
-                    'checkout.phone': 'Phone Number',
-                    'checkout.email': 'Email Address',
-                    'checkout.address': 'Delivery Address',
-                    'checkout.city': 'City',
-                    'checkout.notes': 'Order Notes',
-                    'checkout.payNow': 'Pay Now'
-                }
+                'nav.home': 'Home',
+                'nav.startShopping': 'Start Shopping',
+                'nav.products': 'Products',
+                'nav.liveBilling': 'Live Billing',
+                'shopping.title': 'Ready for Smart Shopping?',
+                'shopping.subtitle': 'Cartify is a smart shopping system using barcode scanning and real-time billing. Experience the future of shopping with our intelligent trolley system.',
+                'trolley.features': 'Smart Features',
+                'feature.barcode': 'Barcode Scanning',
+                'feature.billing': 'Real-Time Billing',
+                'feature.obstacle': 'Obstacle Detection',
+                'feature.mobile': 'Mobile Integration',
+                'section.howItWorks': 'How Cartify Works',
+                'section.experience': 'Experience seamless shopping with our intelligent system',
+                'feature.scan': 'Scan Products',
+                'feature.scanDesc': 'Simply scan barcodes using the built-in scanner. Items are automatically added to your cart.',
+                'step.1': 'Step 1',
+                'feature.billingDesc': 'Watch your bill update instantly as you add items. No surprises at checkout!',
+                'step.2': 'Step 2',
+                'feature.navigation': 'Smart Navigation',
+                'feature.navigationDesc': 'The trolley detects obstacles and helps navigate through crowded aisles safely.',
+                'step.3': 'Step 3',
+                'feature.checkout': 'Quick Checkout',
+                'feature.checkoutDesc': 'Skip the queues! Pay directly from your cart and receive a digital receipt.',
+                'step.4': 'Step 4',
+                'section.popularProducts': 'Popular Products',
+                'section.startJourney': 'Start your smart shopping journey with these popular items',
+                'footer.description': 'Smart Shopping Trolley System<br>Final Year Project',
+                'footer.quickLinks': 'Quick Links',
+                'footer.features': 'Features',
+                'footer.contact': 'Contact',
+                'footer.address': 'Smart Shopping<br>University Campus',
+                'footer.copyright': '© 2024 Cartify Smart Shopping Trolley. All rights reserved.',
+                'footer.project': 'Final Year Project - Department of Information Technology',
+                'greeting.goodMorning': 'Good Morning',
+                'greeting.goodAfternoon': 'Good Afternoon',
+                'greeting.goodEvening': 'Good Evening'
             },
-            'ur': {
-                name: 'اردو',
-                dir: 'rtl',
-                translations: {
-                    // Navigation
-                    'nav.home': 'ہوم',
-                    'nav.startShopping': 'خریداری شروع کریں',
-                    'nav.products': 'مصنوعات',
-                    'nav.liveBilling': 'لائیو بلنگ',
-                    'nav.scanner': 'سکینر',
-                    'nav.checkout': 'چیک آؤٹ',
-                    
-                    // Shopping Page
-                    'shopping.title': 'اسمارٹ شاپنگ سکینر',
-                    'shopping.subtitle': 'مصنوعات سکین کریں اور فوری کارٹ میں شامل کریں',
-                    'shopping.startScanner': 'سکینر شروع کریں',
-                    'shopping.liveCart': 'لائیو کارٹ',
-                    'shopping.scannedItems': 'سکین شدہ اشیاء',
-                    'shopping.totalItems': 'اشیاء',
-                    'shopping.totalAmount': 'کل',
-                    'shopping.clearCart': 'کارٹ صاف کریں',
-                    'shopping.proceedCheckout': 'چیک آؤٹ پر جائیں',
-                    'shopping.emptyCart': 'کوئی شے سکین نہیں ہوئی',
-                    
-                    // Checkout Page
-                    'checkout.title': 'کارٹیفائی چیک آؤٹ',
-                    'checkout.orderSummary': 'آرڈر کا خلاصہ',
-                    'checkout.subtotal': 'ذیلی کل',
-                    'checkout.deliveryFee': 'ڈیلیوری فیس',
-                    'checkout.tax': 'ٹیکس (13%)',
-                    'checkout.totalAmount': 'کل رقم',
-                    'checkout.customerInfo': 'گاہک کی معلومات',
-                    'checkout.fullName': 'پورا نام',
-                    'checkout.phone': 'فون نمبر',
-                    'checkout.email': 'ای میل ایڈریس',
-                    'checkout.address': 'ڈیلیوری ایڈریس',
-                    'checkout.city': 'شہر',
-                    'checkout.notes': 'آرڈر نوٹس',
-                    'checkout.payNow': 'ابھی ادا کریں'
-                }
+            'es': {  // Urdu
+                'nav.home': 'ہوم',
+                'nav.startShopping': 'خریداری شروع کریں',
+                'nav.products': 'مصنوعات',
+                'nav.liveBilling': 'لائیو بلنگ',
+                'shopping.title': 'سمارٹ شاپنگ کے لیے تیار؟',
+                'shopping.subtitle': 'کارٹیفائی ایک سمارٹ شاپنگ سسٹم ہے جو بارکوڈ اسکیننگ اور ریئل ٹائم بلنگ استعمال کرتا ہے۔ ہمارے ذہین ٹرالی سسٹم کے ساتھ شاپنگ کا مستقبل تجربہ کریں۔',
+                'trolley.features': 'خصوصیات',
+                'feature.barcode': 'بارکوڈ اسکیننگ',
+                'feature.billing': 'ریئل ٹائم بلنگ',
+                'feature.obstacle': 'رکاوٹ کا پتہ لگانا',
+                'feature.mobile': 'موبائل انٹیگریشن',
+                'section.howItWorks': 'کارٹیفائی کیسے کام کرتا ہے',
+                'section.experience': 'ہمارے ذہین سسٹم کے ساتھ ہموار شاپنگ کا تجربہ کریں',
+                'feature.scan': 'مصنوعات اسکین کریں',
+                'feature.scanDesc': 'بلٹ ان اسکینر کا استعمال کرتے ہوئے بارکوڈ اسکین کریں۔ اشیاء خود بخود آپ کی کارٹ میں شامل ہو جائیں گی۔',
+                'step.1': 'مرحلہ 1',
+                'feature.billingDesc': 'اشیاء شامل کرتے ہی آپ کا بل فوری طور پر اپ ڈیٹ ہوتا دیکھیں۔ چیک آؤٹ پر کوئی حیرانی نہیں!',
+                'step.2': 'مرحلہ 2',
+                'feature.navigation': 'ذہین نیویگیشن',
+                'feature.navigationDesc': 'ٹرالی رکاوٹوں کا پتہ لگاتی ہے اور ہجوم والے راستوں میں محفوظ طریقے سے تشریف لے جانے میں مدد کرتی ہے۔',
+                'step.3': 'مرحلہ 3',
+                'feature.checkout': 'فوری چیک آؤٹ',
+                'feature.checkoutDesc': 'قطاروں کو چھوڑیں! براہ راست اپنی کارٹ سے ادائیگی کریں اور ڈیجیٹل رسید حاصل کریں۔',
+                'step.4': 'مرحلہ 4',
+                'section.popularProducts': 'مقبول مصنوعات',
+                'section.startJourney': 'ان مشہور اشیاء کے ساتھ اپنی سمارٹ شاپنگ کا سفر شروع کریں',
+                'footer.description': 'سمارٹ شاپنگ ٹرالی سسٹم<br>فائنل ایئر پراجیکٹ',
+                'footer.quickLinks': 'فوری روابط',
+                'footer.features': 'خصوصیات',
+                'footer.contact': 'رابطہ کریں',
+                'footer.address': 'سمارٹ شاپنگ<br>یونیورسٹی کیمپس',
+                'footer.copyright': '© 2024 کارٹیفائی سمارٹ شاپنگ ٹرالی۔ جملہ حقوق محفوظ ہیں۔',
+                'footer.project': 'فائنل ایئر پراجیکٹ - شعبہ انفارمیشن ٹیکنالوجی',
+                'greeting.goodMorning': 'صبح بخیر',
+                'greeting.goodAfternoon': 'دوپہر بخیر',
+                'greeting.goodEvening': 'شام بخیر'
             },
-            'sd': {
-                name: 'سنڌي',
-                dir: 'rtl',
-                translations: {
-                    // Navigation
-                    'nav.home': 'گھر',
-                    'nav.startShopping': 'خريداري شروع ڪريو',
-                    'nav.products': 'پيداوار',
-                    'nav.liveBilling': 'لائيڪ بلنگ',
-                    'nav.scanner': 'سڪينر',
-                    'nav.checkout': 'چيڪ آئوٽ',
-                    
-                    // Shopping Page
-                    'shopping.title': 'سمارٽ شاپنگ سڪينر',
-                    'shopping.subtitle': 'پيداوار سڪين ڪريو ۽ فوري ڪارٽ ۾ شامل ڪريو',
-                    'shopping.startScanner': 'سڪينر شروع ڪريو',
-                    'shopping.liveCart': 'لائيڪ ڪارٽ',
-                    'shopping.scannedItems': 'سڪين ٿيل شيون',
-                    'shopping.totalItems': 'شيون',
-                    'shopping.totalAmount': 'ڪل',
-                    'shopping.clearCart': 'ڪارٽ صاف ڪريو',
-                    'shopping.proceedCheckout': 'چيڪ آئوٽ تي وڃو',
-                    'shopping.emptyCart': 'ڪا به شيء سڪين نه ٿي',
-                    
-                    // Checkout Page
-                    'checkout.title': 'ڪارٽيفائي چيڪ آئوٽ',
-                    'checkout.orderSummary': 'آرڊر جو خلاصو',
-                    'checkout.subtotal': 'ذيل ڪل',
-                    'checkout.deliveryFee': 'ڊليوري فيس',
-                    'checkout.tax': 'ٽيڪس (13%)',
-                    'checkout.totalAmount': 'ڪل رقم',
-                    'checkout.customerInfo': 'گهربار جي معلومات',
-                    'checkout.fullName': 'مڪمل نالو',
-                    'checkout.phone': 'فون نمبر',
-                    'checkout.email': 'اي ميل ايڊريس',
-                    'checkout.address': 'ڊليوري ايڊريس',
-                    'checkout.city': 'شهر',
-                    'checkout.notes': 'آرڊر نوٽس',
-                    'checkout.payNow': 'ھاڻي ادا ڪريو'
-                }
+            'fr': {  // Sindhi
+                'nav.home': 'گھر',
+                'nav.startShopping': 'خريداري شروع ڪريو',
+                'nav.products': 'پيداوار',
+                'nav.liveBilling': 'لائيڪ بلنگ',
+                'shopping.title': 'سمارٽ شاپنگ لاءِ تيار؟',
+                'shopping.subtitle': 'ڪارٽيفاءِ ھڪ سمارٽ شاپنگ سسٽم آھي جيڪو بارڪوڊ اسڪيننگ ۽ ريئل ٽائم بلنگ استعمال ڪري ٿو. اسانجي ذھين ٽرالي سسٽم سان شاپنگ جو مستقبل تجربو ڪريو.',
+                'trolley.features': 'خصوصيتون',
+                'feature.barcode': 'بارڪوڊ اسڪيننگ',
+                'feature.billing': 'ريئل ٽائم بلنگ',
+                'feature.obstacle': 'رڪاوٽ جي ڳولا',
+                'feature.mobile': 'موبائل انٽيگريشن',
+                'section.howItWorks': 'ڪارٽيفاءِ ڪيئن ڪم ڪري ٿو',
+                'section.experience': 'اسانجي ذھين سسٽم سان آسان شاپنگ جو تجربو ڪريو',
+                'feature.scan': 'پيداوار اسڪين ڪريو',
+                'feature.scanDesc': 'بلٽ ان اسڪينر استعمال ڪندي بارڪوڊ اسڪين ڪريو. شيون خود بخود توهانجي ڪارٽ ۾ شامل ٿي وينديون.',
+                'step.1': 'قدم 1',
+                'feature.billingDesc': 'شيون شامل ڪرڻ سان توهانجو بل فوري طور اپڊيٽ ٿيندو ڏسو. چيڪ آئوٽ تي ڪا به حيراني ناهي!',
+                'step.2': 'قدم 2',
+                'feature.navigation': 'ذھين نيويگيشن',
+                'feature.navigationDesc': 'ٽرالي رڪاوٽن جي ڳولا ڪري ٿي ۽ گھڻي ھجوم وارن رستن ۾ محفوظ طريقي سان ھلڻ ۾ مدد ڪري ٿي.',
+                'step.3': 'قدم 3',
+                'feature.checkout': 'فوري چيڪ آئوٽ',
+                'feature.checkoutDesc': 'قطارن کي ڇڏي ڏيو! سڌو سنئون پنھنجي ڪارٽ مان ادائيگي ڪريو ۽ ڊجيٽل رسيد حاصل ڪريو.',
+                'step.4': 'قدم 4',
+                'section.popularProducts': 'مقبول پيداوار',
+                'section.startJourney': 'انھن مشهور شين سان پنھنجو سمارٽ شاپنگ سفر شروع ڪريو',
+                'footer.description': 'سمارٽ شاپنگ ٽرالي سسٽم<br>فائنل ائر پراجيڪٽ',
+                'footer.quickLinks': 'فوري لنڪ',
+                'footer.features': 'خصوصيتون',
+                'footer.contact': 'رابطو',
+                'footer.address': 'سمارٽ شاپنگ<br>يونيورسٽي ڪيمپس',
+                'footer.copyright': '© 2024 ڪارٽيفاءِ سمارٽ شاپنگ ٽرالي. سڀ حق محفوظ آھن.',
+                'footer.project': 'فائنل ائر پراجيڪٽ - شعبو انفارميشن ٽيڪنالاجي',
+                'greeting.goodMorning': 'صبح جو سلام',
+                'greeting.goodAfternoon': 'منجھند جو سلام',
+                'greeting.goodEvening': 'شام جو سلام'
             },
-            'ps': {
-                name: 'پښتو',
-                dir: 'rtl',
-                translations: {
-                    // Navigation
-                    'nav.home': 'کور',
-                    'nav.startShopping': 'پیرود پیل کړئ',
-                    'nav.products': 'توکي',
-                    'nav.liveBilling': 'ژوندی بیلنگ',
-                    'nav.scanner': 'سکینر',
-                    'nav.checkout': 'چیک آوټ',
-                    
-                    // Shopping Page
-                    'shopping.title': 'سمارټ شاپنگ سکینر',
-                    'shopping.subtitle': 'توکي سکین کړئ او فوري کارټ کې اضافه کړئ',
-                    'shopping.startScanner': 'سکینر پیل کړئ',
-                    'shopping.liveCart': 'ژوندی کارټ',
-                    'shopping.scannedItems': 'سکین شوي توکي',
-                    'shopping.totalItems': 'توکي',
-                    'shopping.totalAmount': 'ټول',
-                    'shopping.clearCart': 'کارټ پاک کړئ',
-                    'shopping.proceedCheckout': 'چیک آوټ ته لاړشئ',
-                    'shopping.emptyCart': 'هیڅ توکی سکین نه شوی',
-                    
-                    // Checkout Page
-                    'checkout.title': 'کارټیفای چیک آوټ',
-                    'checkout.orderSummary': 'د امر لنډیز',
-                    'checkout.subtotal': 'فرعي ټول',
-                    'checkout.deliveryFee': 'د تحویلي فیس',
-                    'checkout.tax': 'مالیه (13%)',
-                    'checkout.totalAmount': 'ټوله پیسې',
-                    'checkout.customerInfo': 'د پیرودونکي معلومات',
-                    'checkout.fullName': 'بشپړ نوم',
-                    'checkout.phone': 'د تلیفون شمیره',
-                    'checkout.email': 'ایمیل آدرس',
-                    'checkout.address': 'د تحویلی پته',
-                    'checkout.city': 'ښار',
-                    'checkout.notes': 'د امر یادښتونه',
-                    'checkout.payNow': 'اوس تادیه کړئ'
-                }
+            'de': {  // Pashto
+                'nav.home': 'کور',
+                'nav.startShopping': 'پیرود پیل کړئ',
+                'nav.products': 'توکي',
+                'nav.liveBilling': 'ژوندی بیلنگ',
+                'shopping.title': 'سمارټ شاپنگ لپاره چمتو یاست؟',
+                'shopping.subtitle': 'کارټیفای یو سمارټ شاپنگ سیسټم دی چې د بارکوډ سکین کولو او ریښتیني وخت بلینګ څخه کار اخلي. زموږ د هوښیارټرالي سیسټم سره د پیرود راتلونکی تجربه کړئ.',
+                'trolley.features': 'ځانګړتیاوې',
+                'feature.barcode': 'بارکوډ سکین کول',
+                'feature.billing': 'ریښتیني وخت بلینګ',
+                'feature.obstacle': 'خنډ موندنه',
+                'feature.mobile': 'موبایل ادغام',
+                'section.howItWorks': 'کارټیفای څنګه کار کوي',
+                'section.experience': 'زموږ د هوښیار سیسټم سره بې سیمه پیرود تجربه کړئ',
+                'feature.scan': 'توکي سکین کړئ',
+                'feature.scanDesc': 'د جوړ شوي سکینر په کارولو سره بارکوډ سکین کړئ. توکي په اتوماتيک ډول ستاسو کارټ کې اضافه کیږي.',
+                'step.1': 'لومړی ګام',
+                'feature.billingDesc': 'لکه څنګه چې تاسو توکي اضافه کوئ سمدلاسه خپل بل وګورئ. په چیک آوټ کې حیرانتیا نشته!',
+                'step.2': 'دوهم ګام',
+                'feature.navigation': 'هوښیار نیویگیشن',
+                'feature.navigationDesc': 'ټرالی خنډونه کشف کوي او د ګڼې ګوڼې لارو کې په خوندي ډول تګ راتګ کې مرسته کوي.',
+                'step.3': 'درېیم ګام',
+                'feature.checkout': 'چټک چیک آوټ',
+                'feature.checkoutDesc': 'قطارونه پریږدئ! مستقیم له خپل کارټ څخه تادیه وکړئ او ډیجیټل رسید ترلاسه کړئ.',
+                'step.4': 'څلورم ګام',
+                'section.popularProducts': 'مشهور توکي',
+                'section.startJourney': 'د دې مشهورو توکو سره خپل سمارټ پیرود سفر پیل کړئ',
+                'footer.description': 'سمارټ شاپنگ ټرالی سیسټم<br>وروستی کال پروژه',
+                'footer.quickLinks': 'چټک لینکونه',
+                'footer.features': 'ځانګړتیاوې',
+                'footer.contact': 'اړیکه',
+                'footer.address': 'سمارټ شاپنگ<br>پوهنتون کیمپس',
+                'footer.copyright': '© 2024 کارټیفای سمارټ شاپنگ ټرالی. ټول حقونه خوندي دي.',
+                'footer.project': 'وروستی کال پروژه - د معلوماتي ټیکنالوژۍ څانګه',
+                'greeting.goodMorning': 'سحر مو پخیر',
+                'greeting.goodAfternoon': 'ماسپښین مو پخیر',
+                'greeting.goodEvening': 'ماښام مو پخیر'
             }
         };
         
-        this.initialize();
+        this.currentLang = localStorage.getItem('cartify_language') || 'en';
+        this.init();
     }
     
-    initialize() {
-        // Load saved language
-        const savedLang = localStorage.getItem('cartify_language');
-        if (savedLang && this.languages[savedLang]) {
-            this.currentLang = savedLang;
-        }
-        
-        // Initialize existing dropdown
-        this.initExistingDropdown();
-        
-        // Apply language
-        this.applyLanguage();
-    }
-    
-    initExistingDropdown() {
-        const languageBtn = document.getElementById('languageBtn');
-        const languageDropdown = document.getElementById('languageDropdown');
-        
-        if (!languageBtn || !languageDropdown) {
-            console.error('Language selector elements not found');
-            return;
-        }
-        
-        // Update button text
+    init() {
+        this.applyTranslations();
+        this.setupEventListeners();
         this.updateButtonText();
-        
-        // Update dropdown options
-        this.updateDropdownOptions();
-        
-        // Add event listeners
-        this.addDropdownListeners();
+        this.setDirection();
     }
     
-    updateButtonText() {
-        const languageBtn = document.getElementById('languageBtn');
-        if (languageBtn) {
-            const span = languageBtn.querySelector('span');
-            if (span) {
-                span.textContent = this.currentLang.toUpperCase();
-            }
-        }
-    }
-    
-    updateDropdownOptions() {
-        const languageDropdown = document.getElementById('languageDropdown');
-        if (!languageDropdown) return;
+    setupEventListeners() {
+        const langBtn = document.getElementById('languageBtn');
+        const options = document.querySelectorAll('.language-option');
         
-        // Map your existing codes to our language codes
-        const codeMap = {
-            'en': 'en',
-            'es': 'ur',  // es is actually Urdu in your HTML
-            'fr': 'sd',  // fr is actually Sindhi
-            'de': 'ps'   // de is actually Pashto
-        };
-        
-        // Update each option
-        const options = languageDropdown.querySelectorAll('.language-option');
-        options.forEach(option => {
-            const oldCode = option.dataset.lang;
-            const newCode = codeMap[oldCode];
-            
-            if (newCode) {
-                // Remove active class from all
-                option.classList.remove('active');
-                
-                // Add active class to current language
-                if (newCode === this.currentLang) {
-                    option.classList.add('active');
-                    
-                    // Update check icon
-                    let checkIcon = option.querySelector('i.fa-check');
-                    if (!checkIcon) {
-                        checkIcon = document.createElement('i');
-                        checkIcon.className = 'fas fa-check';
-                        option.prepend(checkIcon);
-                    }
-                } else {
-                    // Remove check icon
-                    const checkIcon = option.querySelector('i.fa-check');
-                    if (checkIcon) {
-                        checkIcon.remove();
-                    }
-                }
-                
-                // Update option text based on language
-                const langName = this.languages[newCode]?.name || oldCode;
-                const textNode = Array.from(option.childNodes).find(node => 
-                    node.nodeType === Node.TEXT_NODE && node.textContent.trim()
-                );
-                
-                if (textNode) {
-                    textNode.textContent = ` ${langName}`;
-                } else {
-                    // If no text node, add one
-                    option.appendChild(document.createTextNode(` ${langName}`));
-                }
-            }
-        });
-    }
-    
-    addDropdownListeners() {
-        const languageBtn = document.getElementById('languageBtn');
-        const languageDropdown = document.getElementById('languageDropdown');
-        
-        if (!languageBtn || !languageDropdown) return;
-        
-        // Toggle dropdown
-        languageBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            languageDropdown.classList.toggle('show');
-        });
-        
-        // Handle option selection
-        const options = languageDropdown.querySelectorAll('.language-option');
-        options.forEach(option => {
-            option.addEventListener('click', (e) => {
+        if (langBtn) {
+            langBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                
-                // Map your old codes to our language codes
-                const codeMap = {
-                    'en': 'en',
-                    'es': 'ur',
-                    'fr': 'sd',
-                    'de': 'ps'
-                };
-                
-                const oldCode = option.dataset.lang;
-                const newCode = codeMap[oldCode];
-                
-                if (newCode && newCode !== this.currentLang) {
-                    this.changeLanguage(newCode);
-                }
-                
-                languageDropdown.classList.remove('show');
+                const dropdown = document.getElementById('languageDropdown');
+                dropdown.classList.toggle('show');
+            });
+        }
+        
+        options.forEach(opt => {
+            opt.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const lang = opt.dataset.lang; // 'en', 'es', 'fr', 'de'
+                this.changeLanguage(lang);
+                document.getElementById('languageDropdown').classList.remove('show');
             });
         });
         
-        // Close dropdown when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.language-selector')) {
-                languageDropdown.classList.remove('show');
-            }
+        document.addEventListener('click', () => {
+            const dropdown = document.getElementById('languageDropdown');
+            if (dropdown) dropdown.classList.remove('show');
         });
     }
     
     changeLanguage(langCode) {
-        if (this.languages[langCode] && this.currentLang !== langCode) {
-            this.currentLang = langCode;
-            localStorage.setItem('cartify_language', langCode);
-            
-            // Update UI
-            this.updateButtonText();
-            this.updateDropdownOptions();
-            
-            // Apply language changes
-            this.applyLanguage();
-            
-            // Show notification
-            this.showNotification(`Language changed to ${this.languages[langCode].name}`);
-        }
+        if (!this.translations[langCode]) return;
+        this.currentLang = langCode;
+        localStorage.setItem('cartify_language', langCode);
+        this.applyTranslations();
+        this.updateButtonText();
+        this.setDirection();
+        this.updateWelcomeTime();
+        // Show notification
+        const msg = langCode === 'en' ? 'English selected' : 
+                    langCode === 'es' ? 'Urdu selected' :
+                    langCode === 'fr' ? 'Sindhi selected' : 'Pashto selected';
+        this.showNotification(msg);
     }
     
-    applyLanguage() {
-        const lang = this.languages[this.currentLang];
-        
-        // Update HTML direction and language
-        document.documentElement.dir = lang.dir;
-        document.documentElement.lang = this.currentLang;
-        
-        // Apply RTL styles if needed
-        this.applyRTLStyles();
-        
-        // Apply translations
-        this.translatePage();
-    }
-    
-    applyRTLStyles() {
-        const isRTL = this.languages[this.currentLang].dir === 'rtl';
-        
-        // Remove existing RTL styles
-        const existingStyle = document.getElementById('rtl-styles');
-        if (existingStyle) existingStyle.remove();
-        
-        if (isRTL) {
-            const style = document.createElement('style');
-            style.id = 'rtl-styles';
-            style.textContent = `
-                /* RTL Layout */
-                body {
-                    text-align: right;
-                    direction: rtl;
+    applyTranslations() {
+        const t = this.translations[this.currentLang];
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (t[key]) {
+                if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                    el.placeholder = t[key];
+                } else {
+                    el.textContent = t[key];
                 }
-                
-                /* Navigation */
-                .nav-menu {
-                    padding-right: 0;
-                }
-                
-                .nav-item {
-                    margin-left: 10px;
-                    margin-right: 0;
-                }
-                
-                /* Buttons */
-                .btn i {
-                    margin-right: 0;
-                    margin-left: 5px;
-                }
-                
-                /* Inputs */
-                input, textarea, select {
-                    text-align: right;
-                }
-                
-                /* Flex containers */
-                .d-flex {
-                    flex-direction: row-reverse;
-                }
-                
-                /* Margins */
-                .me-2, .me-3, .me-4 {
-                    margin-left: 0.5rem !important;
-                    margin-right: 0 !important;
-                }
-                
-                .ms-2, .ms-3, .ms-4 {
-                    margin-right: 0.5rem !important;
-                    margin-left: 0 !important;
-                }
-                
-                /* Text alignment */
-                .text-start { text-align: right !important; }
-                .text-end { text-align: left !important; }
-                
-                /* Shopping page specific */
-                .scanner-section {
-                    direction: ltr; /* Keep scanner LTR */
-                }
-                
-                .cart-section {
-                    text-align: right;
-                }
-                
-                .order-item {
-                    flex-direction: row-reverse;
-                }
-                
-                .item-details {
-                    text-align: right;
-                }
-                
-                /* Checkout page specific */
-                .checkout-header {
-                    flex-direction: row-reverse;
-                }
-                
-                .checkout-steps {
-                    flex-direction: row-reverse;
-                }
-                
-                .step {
-                    flex-direction: row-reverse;
-                }
-                
-                .order-summary, .payment-section {
-                    text-align: right;
-                }
-                
-                .total-row, .summary-row {
-                    flex-direction: row-reverse;
-                }
-            `;
-            document.head.appendChild(style);
-        }
-    }
-    
-    translatePage() {
-        const lang = this.languages[this.currentLang];
-        
-        // Apply translations to elements with data-i18n attribute
-        const elements = document.querySelectorAll('[data-i18n]');
-        elements.forEach(element => {
-            const key = element.dataset.i18n;
-            if (lang.translations[key]) {
-                this.applyTranslation(element, lang.translations[key]);
-            }
-        });
-        
-        // Auto translate common elements
-        this.autoTranslate();
-    }
-    
-    applyTranslation(element, text) {
-        if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-            element.placeholder = text;
-        } else {
-            element.textContent = text;
-        }
-    }
-    
-    autoTranslate() {
-        const lang = this.languages[this.currentLang];
-        
-        // Auto translate based on text content
-        this.translateByTextContent('Home', 'nav.home');
-        this.translateByTextContent('Start Shopping', 'nav.startShopping');
-        this.translateByTextContent('Products', 'nav.products');
-        this.translateByTextContent('Live Billing', 'nav.liveBilling');
-        this.translateByTextContent('Scanner', 'nav.scanner');
-        this.translateByTextContent('Checkout', 'nav.checkout');
-        
-        // Shopping page translations
-        this.translateByTextContent('Smart Shopping Scanner', 'shopping.title');
-        this.translateByTextContent('Scan products to add them to your cart instantly', 'shopping.subtitle');
-        this.translateByTextContent('Start Scanner', 'shopping.startScanner');
-        this.translateByTextContent('Live Cart', 'shopping.liveCart');
-        this.translateByTextContent('Scanned Items', 'shopping.scannedItems');
-        this.translateByTextContent('Items', 'shopping.totalItems');
-        this.translateByTextContent('Total', 'shopping.totalAmount');
-        this.translateByTextContent('Clear Cart', 'shopping.clearCart');
-        this.translateByTextContent('Proceed to Checkout', 'shopping.proceedCheckout');
-        this.translateByTextContent('No items scanned yet', 'shopping.emptyCart');
-        
-        // Checkout page translations
-        this.translateByTextContent('Cartify Checkout', 'checkout.title');
-        this.translateByTextContent('Order Summary', 'checkout.orderSummary');
-        this.translateByTextContent('Subtotal', 'checkout.subtotal');
-        this.translateByTextContent('Delivery Fee', 'checkout.deliveryFee');
-        this.translateByTextContent('Tax (13%)', 'checkout.tax');
-        this.translateByTextContent('Total Amount', 'checkout.totalAmount');
-        this.translateByTextContent('Customer Information', 'checkout.customerInfo');
-        this.translateByTextContent('Full Name', 'checkout.fullName');
-        this.translateByTextContent('Phone Number', 'checkout.phone');
-        this.translateByTextContent('Email Address', 'checkout.email');
-        this.translateByTextContent('Delivery Address', 'checkout.address');
-        this.translateByTextContent('City', 'checkout.city');
-        this.translateByTextContent('Order Notes', 'checkout.notes');
-        this.translateByTextContent('Pay Now', 'checkout.payNow');
-    }
-    
-    translateByTextContent(text, translationKey) {
-        const lang = this.languages[this.currentLang];
-        if (!lang.translations[translationKey]) return;
-        
-        // Find all elements with this text
-        const xpath = `//*[text()='${text}' or text()='${text} ' or text()=' ${text}' or normalize-space(text())='${text}']`;
-        const result = document.evaluate(xpath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
-        
-        for (let i = 0; i < result.snapshotLength; i++) {
-            const element = result.snapshotItem(i);
-            if (element && !element.dataset.i18n) {
-                element.textContent = lang.translations[translationKey];
-            }
-        }
-        
-        // Also check for partial matches (for placeholders, etc)
-        document.querySelectorAll('*').forEach(element => {
-            if (element.textContent && element.textContent.includes(text) && !element.dataset.i18n) {
-                element.textContent = element.textContent.replace(text, lang.translations[translationKey]);
             }
         });
     }
     
-    showNotification(message) {
-        // Create notification
-        const notification = document.createElement('div');
-        notification.className = 'lang-notification';
-        notification.innerHTML = `
-            <i class="fas fa-language"></i>
-            <span>${message}</span>
-        `;
-        
-        // Add styles
-        const style = document.createElement('style');
-        style.textContent = `
-            .lang-notification {
-                position: fixed;
-                bottom: 20px;
-                right: 20px;
-                background: #FF6B35;
-                color: white;
-                padding: 12px 20px;
-                border-radius: 8px;
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                z-index: 9999;
-                animation: slideIn 0.3s ease;
+    updateButtonText() {
+        const btnSpan = document.querySelector('#languageBtn span');
+        if (btnSpan) {
+            let code = this.currentLang.toUpperCase();
+            if (code === 'ES') code = 'UR';
+            else if (code === 'FR') code = 'SD';
+            else if (code === 'DE') code = 'PS';
+            btnSpan.textContent = code;
+        }
+        // Update active class on dropdown
+        document.querySelectorAll('.language-option').forEach(opt => {
+            if (opt.dataset.lang === this.currentLang) {
+                opt.classList.add('active');
+                const checkIcon = opt.querySelector('.fa-check');
+                if (checkIcon) checkIcon.style.opacity = '1';
+            } else {
+                opt.classList.remove('active');
+                const checkIcon = opt.querySelector('.fa-check');
+                if (checkIcon) checkIcon.style.opacity = '0';
             }
-            
-            @keyframes slideIn {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-            
-            @keyframes slideOut {
-                from { transform: translateX(0); opacity: 1; }
-                to { transform: translateX(100%); opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
-        
-        document.body.appendChild(notification);
-        
-        // Remove after 3 seconds
-        setTimeout(() => {
-            notification.style.animation = 'slideOut 0.3s ease';
-            setTimeout(() => notification.remove(), 300);
-        }, 3000);
+        });
+    }
+    
+    setDirection() {
+        const isRTL = (this.currentLang === 'es' || this.currentLang === 'fr' || this.currentLang === 'de');
+        document.body.style.direction = isRTL ? 'rtl' : 'ltr';
+        document.body.style.textAlign = isRTL ? 'right' : 'left';
+    }
+    
+    updateWelcomeTime() {
+        const welcomeEl = document.getElementById('welcomeTime');
+        if (!welcomeEl) return;
+        const now = new Date();
+        const hours = now.getHours();
+        let greeting = '';
+        if (hours < 12) greeting = this.translations[this.currentLang]['greeting.goodMorning'];
+        else if (hours < 17) greeting = this.translations[this.currentLang]['greeting.goodAfternoon'];
+        else greeting = this.translations[this.currentLang]['greeting.goodEvening'];
+        const timeString = now.toLocaleTimeString();
+        const dateString = now.toLocaleDateString();
+        welcomeEl.textContent = `${greeting} • ${timeString} • ${dateString}`;
+    }
+    
+    showNotification(msg) {
+        const div = document.createElement('div');
+        div.textContent = msg;
+        div.style.cssText = 'position:fixed; bottom:20px; right:20px; background:#FF6B35; color:white; padding:10px 20px; border-radius:8px; z-index:9999;';
+        document.body.appendChild(div);
+        setTimeout(() => div.remove(), 2000);
     }
 }
 
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    window.languageManager = new LanguageManager();
-    
-    // Add data-i18n attributes to key elements
-    setTimeout(() => {
-        // Add data-i18n to navigation
-        document.querySelectorAll('.nav-link').forEach(link => {
-            const text = link.textContent.trim();
-            if (text) {
-                link.dataset.i18n = `nav.${text.toLowerCase().replace(/\s+/g, '')}`;
-            }
-        });
-        
-        // Add data-i18n to buttons
-        document.querySelectorAll('button').forEach(btn => {
-            const text = btn.textContent.trim();
-            if (text && text.length < 30) {
-                btn.dataset.i18n = `button.${text.toLowerCase().replace(/\s+/g, '')}`;
-            }
-        });
-        
-        // Add data-i18n to headings
-        document.querySelectorAll('h1, h2, h3, h4').forEach(heading => {
-            const text = heading.textContent.trim();
-            if (text) {
-                heading.dataset.i18n = `heading.${text.toLowerCase().replace(/\s+/g, '')}`;
-            }
-        });
-        
-        // Apply translations
-        window.languageManager.translatePage();
-    }, 100);
+document.addEventListener('DOMContentLoaded', () => {
+    window.langManager = new LanguageManager();
 });
