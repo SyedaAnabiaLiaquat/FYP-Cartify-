@@ -1,3 +1,4 @@
+
 /* style.css - Cartify Home Page (Using Login Page Colors) */
 
 :root {
@@ -104,9 +105,10 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 15px 20px;
+    padding: 20px 0;
     max-width: var(--container-width);
     margin: 0 auto;
+    padding: 15px 20px;
 }
 
 /* Logo */
@@ -137,6 +139,7 @@ body {
     -webkit-background-clip: text;
     color: transparent;
 }
+
 
 /* Navigation Menu */
 .nav-menu {
@@ -302,25 +305,14 @@ body {
     transform: translateY(-50%);
     font-size: 14px;
     color: var(--white);
-    transition: var(--transition);
 }
 
 .theme-toggle .fa-moon {
     left: 8px;
-    opacity: 0.5;
 }
 
 .theme-toggle .fa-sun {
     right: 8px;
-    opacity: 1;
-}
-
-.dark-mode .theme-toggle .fa-moon {
-    opacity: 1;
-}
-
-.dark-mode .theme-toggle .fa-sun {
-    opacity: 0.5;
 }
 
 /* User Profile */
@@ -680,10 +672,6 @@ body {
     padding: 25px;
 }
 
-.dark-mode .trolley-info {
-    background-color: rgba(26, 26, 46, 0.9);
-}
-
 .trolley-info h3 {
     color: var(--dark);
     margin-bottom: 20px;
@@ -1002,92 +990,6 @@ body {
     border-top: 1px solid var(--gray-light);
     color: var(--gray);
     font-size: 0.9rem;
-}
-
-/* Dark Mode Additional Styles */
-.dark-mode .navbar {
-    background-color: var(--white);
-    box-shadow: var(--shadow-md);
-}
-
-.dark-mode .nav-link {
-    color: var(--gray);
-}
-
-.dark-mode .nav-link:hover,
-.dark-mode .nav-link.active {
-    color: var(--primary);
-    background-color: rgba(255, 107, 53, 0.15);
-}
-
-.dark-mode .language-btn,
-.dark-mode .user-btn {
-    background-color: var(--light-gray);
-    color: var(--dark);
-}
-
-.dark-mode .language-dropdown {
-    background-color: var(--white);
-    box-shadow: var(--shadow-lg);
-}
-
-.dark-mode .language-option {
-    color: var(--dark);
-}
-
-.dark-mode .language-option:hover {
-    background-color: var(--light-gray);
-}
-
-.dark-mode .welcome-card,
-.dark-mode .feature-card,
-.dark-mode .product-card,
-.dark-mode .stat-card {
-    background-color: var(--white);
-    box-shadow: var(--shadow-md);
-}
-
-.dark-mode .welcome-message h2,
-.dark-mode .feature-card h3,
-.dark-mode .product-name {
-    color: var(--dark);
-}
-
-.dark-mode .intro-text,
-.dark-mode .feature-card p {
-    color: var(--gray-dark);
-}
-
-.dark-mode .btn-secondary {
-    background-color: transparent;
-    border-color: var(--primary);
-    color: var(--primary);
-}
-
-.dark-mode .btn-secondary:hover {
-    background-color: rgba(255, 107, 53, 0.15);
-}
-
-.dark-mode .footer {
-    background-color: var(--white);
-    border-top-color: var(--gray-light);
-}
-
-.dark-mode .footer-links a {
-    color: var(--gray);
-}
-
-.dark-mode .footer-links a:hover {
-    color: var(--primary);
-}
-
-.dark-mode .footer-bottom {
-    border-top-color: var(--gray-light);
-    color: var(--gray);
-}
-
-.dark-mode .stat-label {
-    color: var(--gray);
 }
 
 /* Responsive Design */

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cartify | Admin Login</title>
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="bg-shape shape-1"></div>
+    <div class="bg-shape shape-2"></div>
+    <div class="bg-shape shape-3"></div>
+
+    <div class="login-container">
+        <div class="login-card">
+            <div class="logo-section">
+                <div class="logo">
+                    <div class="logo-icon"><i class="fas fa-shopping-cart"></i></div>
+                    <h1 class="logo-text">Cartify</h1>
+                </div>
+                <p class="tagline">Smart Shopping Experience</p>
+            </div>
+
+            <div class="welcome-section">
+                <h2 class="welcome-title">Admin Login</h2>
+                <p class="welcome-subtitle">Enter your credentials to manage the system</p>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label"><i class="fas fa-envelope"></i> Email</label>
+                <div class="input-group">
+                    <input type="email" class="form-input" id="email" placeholder="admin@cartify.com">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label"><i class="fas fa-lock"></i> Password</label>
+                <div class="input-group">
+                    <input type="password" class="form-input" id="password" placeholder="••••••••">
+                </div>
+            </div>
+
+            <!-- Login button triggers the validation function -->
+            <button class="login-btn" onclick="checkAuth()">
+                Login to Dashboard
+            </button>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * Function to validate admin credentials
+         */
+        function checkAuth() {
+            // Retrieve input values from the form
+            var email = document.getElementById('email').value;
+            var pass = document.getElementById('password').value;
+
+            // Define hardcoded admin credentials
+            var correctEmail = "admin@cartify.com";
+            var correctPass = "12345";
+
+            // Validate credentials
+            if (email === correctEmail && pass === correctPass) {
+                // Set authentication flag in LocalStorage
+                localStorage.setItem('isLoggedIn', 'true');
+                
+                // Show success message and redirect
+                alert("Login Successful! Welcome to the Admin Panel.");
+                window.location.href = 'dashboard.html';
+            } else {
+                // Show error message for incorrect inputs
+                alert("Invalid Credentials! Please check your email and password.");
+            }
+        }
+    </script>
+</body>
+</html>

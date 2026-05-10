@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartify | Admin Dashboard</title>
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        /* Table Styling */
+        .inventory-table { width: 100%; border-collapse: collapse; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-top: 20px; }
+        .inventory-table th, .inventory-table td { padding: 15px 20px; text-align: left; border-bottom: 1px solid #eee; }
+        .inventory-table th { background-color: #FF6B35; color: white; }
+        
+        /* Logout Button */
+        .logout-btn { background: #fff0eb; color: #FF6B35; border: 1px solid #FF6B35; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        
+        /* Modal Fix */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 9999; }
+        .modal-content { background: white; padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; }
+        
+        .visible { display: block !important; }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <div class="logo-icon"><i class="fas fa-shopping-cart"></i></div>
+                <div class="logo-text">Cartify</div>
+            </div>
+            <div class="nav-controls">
+                <div class="user-profile" style="display: flex; align-items: center; gap: 15px;">
+                    <div class="user-btn"><div class="user-avatar">A</div><span class="user-name">Admin</span></div>
+                    <button class="logout-btn" onclick="logout()">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container" style="margin-top: 40px;">
+        <section class="welcome-card">
+            <h1>Inventory Analytics</h1>
+            <div style="height: 250px; margin-top: 20px;"><canvas id="inventoryChart"></canvas></div>
+        </section>
+
+        <section class="stats-section" style="margin-top: 30px;">
+            <div class="stats-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="stat-card" onclick="toggleView('totalItems')" style="cursor: pointer; background: white; padding: 20px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                    <div class="stat-icon"><i class="fas fa-boxes" style="font-size: 2rem; color: #FF6B35;"></i></div>
+                    <div class="stat-content"><h3>Stock</h3><p>Manage Items</p></div>
+                </div>
+                <div class="stat-card" onclick="toggleView('activeCarts')" style="cursor: pointer; background: white; padding: 20px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                    <div class="stat-icon"><i class="fas fa-shopping-basket" style="font-size: 2rem; color: #FF6B35;"></i></div>
+                    <div class="stat-content"><h3>Carts</h3><p>Live Monitoring</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STOCK TABLE (Visible by default) -->
+        <div id="totalItemsTable" class="visible">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 30px;">
+                <h2>Product Inventory</h2>
+                <button class="btn btn-primary" onclick="openModal()" style="background:#FF6B35; color:white; border:none; padding:10px 20px; border-radius:10px; cursor:pointer;">+ Add New Product</button>
+            </div>
+            <table class="inventory-table">
+                <thead><tr><th>ID</th><th>Name</th><th>Price</th><th>Stock</th><th>Action</th></tr></thead>
+                <tbody id="productBody"></tbody>
+            </table>
+        </div>
+
+        <!-- CARTS TABLE (Hidden by default) -->
+        <div id="activeCartsTable" class="hidden">
+            <h2 style="margin-top: 30px;">Active Shopping Carts</h2>
+            <table class="inventory-table">
+                <thead><tr><th>Trolley ID</th><th>Customer</th><th>Items</th><th>Total Bill</th></tr></thead>
+                <tbody><tr><td>TR-102</td><td>Guest 1</td><td>5</td><td>Rs. 1250</td></tr></tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <h3>Add New Product</h3>
+            <input type="text" id="pName" placeholder="Name" style="width:100%; margin:10px 0; padding:10px;">
+            <input type="text" id="pPrice" placeholder="Price" style="width:100%; margin:10px 0; padding:10px;">
+            <input type="number" id="pStock" placeholder="Stock" style="width:100%; margin:10px 0; padding:10px;">
+            <button onclick="saveProduct()" style="width:100%; background:#FF6B35; color:white; padding:10px; border:none; border-radius:5px; cursor:pointer;">Save Product</button>
+            <button onclick="closeModal()" style="width:100%; margin-top:10px; background:none; border:none; cursor:pointer;">Cancel</button>
+        </div>
+    </div>
+
+    <script>
+        let myChart;
+
+        window.onload = function() {
+            if (localStorage.getItem('isLoggedIn') !== 'true') {
+                window.location.href = 'index.html';
+                return;
+            }
+            loadAndRender();
+            initChart();
+        };
+
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            window.location.href = 'index.html';
+        }
+
+        function toggleView(view) {
+            if(view === 'totalItems') {
+                document.getElementById('totalItemsTable').className = 'visible';
+                document.getElementById('activeCartsTable').className = 'hidden';
+            } else {
+                document.getElementById('totalItemsTable').className = 'hidden';
+                document.getElementById('activeCartsTable').className = 'visible';
+            }
+        }
+
+        function openModal() { document.getElementById('productModal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('productModal').style.display = 'none'; }
+
+        function saveProduct() {
+            const name = document.getElementById('pName').value;
+            const price = document.getElementById('pPrice').value;
+            const stock = document.getElementById('pStock').value;
+            const id = Math.floor(Math.random() * 900) + 100;
+
+            if(name && price && stock) {
+                let products = JSON.parse(localStorage.getItem('cartifyProducts')) || [];
+                products.push({ id, name, price, stock: parseInt(stock) });
+                localStorage.setItem('cartifyProducts', JSON.stringify(products));
+                loadAndRender();
+                updateChart();
+                closeModal();
+            } else { alert("Fill all fields!"); }
+        }
+
+        function loadAndRender() {
+            const products = JSON.parse(localStorage.getItem('cartifyProducts')) || [];
+            const body = document.getElementById("productBody");
+            body.innerHTML = "";
+            products.forEach(p => {
+                body.innerHTML += `<tr><td>#${p.id}</td><td>${p.name}</td><td>${p.price}</td><td>${p.stock}</td><td><button onclick="removeProduct(${p.id})" style="color:red; border:none; background:none; cursor:pointer;"><i class="fas fa-trash"></i></button></td></tr>`;
+            });
+        }
+
+        function removeProduct(id) {
+            let products = JSON.parse(localStorage.getItem('cartifyProducts')) || [];
+            products = products.filter(p => p.id !== id);
+            localStorage.setItem('cartifyProducts', JSON.stringify(products));
+            loadAndRender();
+            updateChart();
+        }
+
+        function initChart() {
+            const ctx = document.getElementById('inventoryChart').getContext('2d');
+            const products = JSON.parse(localStorage.getItem('cartifyProducts')) || [];
+            myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: products.map(p => p.name),
+                    datasets: [{ label: 'Stock Levels', data: products.map(p => p.stock), backgroundColor: '#FF6B35' }]
+                },
+                options: { maintainAspectRatio: false }
+            });
+        }
+
+        function updateChart() {
+            const products = JSON.parse(localStorage.getItem('cartifyProducts')) || [];
+            myChart.data.labels = products.map(p => p.name);
+            myChart.data.datasets[0].data = products.map(p => p.stock);
+            myChart.update();
+        }
+    </script>
+</body>
+</html>
