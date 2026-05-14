@@ -5,6 +5,7 @@
     <title>Cartify | Admin Login</title>
     <link rel="stylesheet" href="login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <div class="bg-shape shape-1"></div>
@@ -29,7 +30,7 @@
             <div class="form-group">
                 <label class="form-label"><i class="fas fa-envelope"></i> Email</label>
                 <div class="input-group">
-                    <input type="email" class="form-input" id="email" placeholder="admin@cartify.com">
+                    <input type="email" class="form-input" id="email" placeholder="Enter Your Email">
                 </div>
             </div>
 
@@ -40,39 +41,73 @@
                 </div>
             </div>
 
-            <!-- Login button triggers the validation function -->
-            <button class="login-btn" onclick="checkAuth()">
-                Login to Dashboard
-            </button>
+            <button class="login-btn" id="loginBtn">Login to Dashboard</button>
+            <div id="errorMsg" style="color: red; margin-top: 15px; text-align: center; font-size: 14px;"></div>
         </div>
     </div>
 
     <script>
-        /**
-         * Function to validate admin credentials
-         */
-        function checkAuth() {
-            // Retrieve input values from the form
-            var email = document.getElementById('email').value;
-            var pass = document.getElementById('password').value;
+        // --- Supabase Config ---
+        const SUPABASE_URL = "https://reaebmuoghlbfiwbvfdv.supabase.co";
+        const SUPABASE_ANON_KEY = "sb_publishable_T74rSjgm3QpIMCSUg3Q_OQ_gvX984N8";
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-            // Define hardcoded admin credentials
-            var correctEmail = "admin@cartify.com";
-            var correctPass = "12345";
-
-            // Validate credentials
-            if (email === correctEmail && pass === correctPass) {
-                // Set authentication flag in LocalStorage
-                localStorage.setItem('isLoggedIn', 'true');
-                
-                // Show success message and redirect
-                alert("Login Successful! Welcome to the Admin Panel.");
-                window.location.href = 'dashboard.html';
-            } else {
-                // Show error message for incorrect inputs
-                alert("Invalid Credentials! Please check your email and password.");
+        // --- Check if already logged in ---
+        (function checkExistingSession() {
+            const session = localStorage.getItem('admin_session');
+            if (session) {
+                // Already logged in, redirect to dashboard
+                window.location.replace('dashboard.html');
             }
-        }
+        })();
+
+        // --- Login logic ---
+        const loginBtn = document.getElementById('loginBtn');
+        loginBtn.addEventListener('click', async function() {
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('errorMsg');
+            errorDiv.innerText = '';
+            
+            if (!email || !password) {
+                errorDiv.innerText = 'Please fill both fields';
+                return;
+            }
+
+            const btn = this;
+            btn.disabled = true;
+            btn.innerText = 'Logging in...';
+
+            try {
+                const { data, error } = await supabaseClient.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+
+                if (error) {
+                    if (error.message.includes("Invalid login credentials")) {
+                        errorDiv.innerText = 'Wrong Password';
+                    } else {
+                        errorDiv.innerText = 'Please check your network and try again';
+                    }
+                } else if (data.user) {
+                    localStorage.setItem('admin_session', JSON.stringify({
+                        id: data.user.id,
+                        email: data.user.email
+                    }));
+                    errorDiv.style.color = 'green';
+                    errorDiv.innerText = 'Login Successful! Redirecting...';
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1000);
+                }
+            } catch (err) {
+                errorDiv.innerText = 'Please check your network and try again';
+            } finally {
+                btn.disabled = false;
+                btn.innerText = 'Login to Dashboard';
+            }
+        });
     </script>
 </body>
 </html>

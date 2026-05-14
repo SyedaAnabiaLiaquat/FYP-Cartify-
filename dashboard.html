@@ -7,26 +7,19 @@
     <link rel="stylesheet" href="home.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        /* Table Styling */
         .inventory-table { width: 100%; border-collapse: collapse; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-top: 20px; }
         .inventory-table th, .inventory-table td { padding: 15px 20px; text-align: left; border-bottom: 1px solid #eee; }
         .inventory-table th { background-color: #FF6B35; color: white; }
-        
-        /* Logout Button */
         .logout-btn { background: #fff0eb; color: #FF6B35; border: 1px solid #FF6B35; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; }
-        
-        /* Modal Fix */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 9999; }
         .modal-content { background: white; padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; }
-        
         .visible { display: block !important; }
         .hidden { display: none !important; }
     </style>
 </head>
 <body>
-
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
@@ -36,7 +29,7 @@
             <div class="nav-controls">
                 <div class="user-profile" style="display: flex; align-items: center; gap: 15px;">
                     <div class="user-btn"><div class="user-avatar">A</div><span class="user-name">Admin</span></div>
-                    <button class="logout-btn" onclick="logout()">Logout</button>
+                    <button class="logout-btn" id="logoutBtn">Logout</button>
                 </div>
             </div>
         </div>
@@ -61,7 +54,6 @@
             </div>
         </section>
 
-        <!-- STOCK TABLE (Visible by default) -->
         <div id="totalItemsTable" class="visible">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 30px;">
                 <h2>Product Inventory</h2>
@@ -73,110 +65,174 @@
             </table>
         </div>
 
-        <!-- CARTS TABLE (Hidden by default) -->
         <div id="activeCartsTable" class="hidden">
             <h2 style="margin-top: 30px;">Active Shopping Carts</h2>
             <table class="inventory-table">
                 <thead><tr><th>Trolley ID</th><th>Customer</th><th>Items</th><th>Total Bill</th></tr></thead>
-                <tbody><tr><td>TR-102</td><td>Guest 1</td><td>5</td><td>Rs. 1250</td></tr></tbody>
+                <tbody>
+                    <tr><td>TR-102</td><td>Guest 1</td><td>5</td><td>Rs. 1250</td><tr>
+                    <tr><td>TR-103</td><td>Guest 2</td><td>3</td><td>Rs. 780</td></tr>
+                    <tr><td>TR-104</td><td>Guest 3</td><td>7</td><td>Rs. 2100</td></tr>
+                </tbody>
             </table>
         </div>
     </main>
 
-    <!-- Modal -->
     <div id="productModal" class="modal">
         <div class="modal-content">
             <h3>Add New Product</h3>
-            <input type="text" id="pName" placeholder="Name" style="width:100%; margin:10px 0; padding:10px;">
-            <input type="text" id="pPrice" placeholder="Price" style="width:100%; margin:10px 0; padding:10px;">
-            <input type="number" id="pStock" placeholder="Stock" style="width:100%; margin:10px 0; padding:10px;">
-            <button onclick="saveProduct()" style="width:100%; background:#FF6B35; color:white; padding:10px; border:none; border-radius:5px; cursor:pointer;">Save Product</button>
-            <button onclick="closeModal()" style="width:100%; margin-top:10px; background:none; border:none; cursor:pointer;">Cancel</button>
+            <input type="text" id="pName" placeholder="Product Name" required>
+            <input type="number" id="pPrice" placeholder="Price (e.g. 499)" required>
+            <input type="number" id="pStock" placeholder="Stock Quantity" required>
+            <input type="text" id="pBarcode" placeholder="Barcode (e.g., 890123456789)" required>
+            <button onclick="saveProduct()">Save Product</button>
+            <button onclick="closeModal()">Cancel</button>
         </div>
     </div>
 
     <script>
+        // ---------- SUPABASE ----------
+        const SUPABASE_URL = "https://reaebmuoghlbfiwbvfdv.supabase.co";
+        const SUPABASE_ANON_KEY = "sb_publishable_T74rSjgm3QpIMCSUg3Q_OQ_gvX984N8";
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        // -----------------------------
+
         let myChart;
 
-        window.onload = function() {
-            if (localStorage.getItem('isLoggedIn') !== 'true') {
-                window.location.href = 'index.html';
+        window.onload = async function() {
+            const session = localStorage.getItem('admin_session');
+            if (!session) {
+                window.location.replace('index.html');
                 return;
             }
-            loadAndRender();
             initChart();
+            await loadProducts();
         };
 
-        function logout() {
-            localStorage.removeItem('isLoggedIn');
-            window.location.href = 'index.html';
+        // ---------- LOGOUT ----------
+        function performLogout() {
+            if (confirm("Are you sure you want to logout?")) {
+                localStorage.clear();
+                sessionStorage.clear();
+                window.location.replace('index.html');
+            }
+        }
+        document.getElementById('logoutBtn').addEventListener('click', performLogout);
+
+        // ---------- Product Functions ----------
+        async function loadProducts() {
+            const { data, error } = await supabaseClient
+                .from('products')
+                .select('prod-id, name, price, stock')
+                .order('prod-id', { ascending: true });
+            if (error) {
+                console.error("Load error:", error);
+                return;
+            }
+            const tbody = document.getElementById('productBody');
+            tbody.innerHTML = '';
+            if (!data.length) {
+                tbody.innerHTML = '<tr><td colspan="5">No products added yet. Click "Add New Product".</td></tr>';
+                updateChart([]);
+                return;
+            }
+            data.forEach(p => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>#${p['prod-id']}</td>
+                        <td>${p.name}</td>
+                        <td>₹${p.price}</td>
+                        <td>${p.stock ?? 0}</td>
+                        <td><button onclick="deleteProduct(${p['prod-id']})" style="color:red; border:none; background:none;"><i class="fas fa-trash"></i> Delete</button></td>
+                    </tr>
+                `;
+            });
+            updateChart(data);
         }
 
-        function toggleView(view) {
-            if(view === 'totalItems') {
-                document.getElementById('totalItemsTable').className = 'visible';
-                document.getElementById('activeCartsTable').className = 'hidden';
+        async function saveProduct() {
+            const name = document.getElementById('pName').value.trim();
+            const price = parseFloat(document.getElementById('pPrice').value);
+            const stock = parseInt(document.getElementById('pStock').value);
+            const barcode = document.getElementById('pBarcode').value.trim();
+
+            if (!name || isNaN(price) || isNaN(stock) || !barcode) {
+                alert("Please fill all fields (Name, Price, Stock, Barcode)");
+                return;
+            }
+
+            const newId = Date.now(); // unique numeric ID
+            const { error } = await supabaseClient
+                .from('products')
+                .insert([{
+                    'prod-id': newId,
+                    name: name,
+                    price: price,
+                    stock: stock,
+                    barcode: barcode
+                }]);
+
+            if (error) {
+                alert("Error: " + error.message);
             } else {
-                document.getElementById('totalItemsTable').className = 'hidden';
-                document.getElementById('activeCartsTable').className = 'visible';
+                closeModal();
+                await loadProducts();
+                // Clear form fields
+                document.getElementById('pName').value = '';
+                document.getElementById('pPrice').value = '';
+                document.getElementById('pStock').value = '';
+                document.getElementById('pBarcode').value = '';
             }
         }
 
-        function openModal() { document.getElementById('productModal').style.display = 'flex'; }
-        function closeModal() { document.getElementById('productModal').style.display = 'none'; }
-
-        function saveProduct() {
-            const name = document.getElementById('pName').value;
-            const price = document.getElementById('pPrice').value;
-            const stock = document.getElementById('pStock').value;
-            const id = Math.floor(Math.random() * 900) + 100;
-
-            if(name && price && stock) {
-                let products = JSON.parse(localStorage.getItem('cartifyProducts')) || [];
-                products.push({ id, name, price, stock: parseInt(stock) });
-                localStorage.setItem('cartifyProducts', JSON.stringify(products));
-                loadAndRender();
-                updateChart();
-                closeModal();
-            } else { alert("Fill all fields!"); }
+        async function deleteProduct(id) {
+            if (!confirm("Delete this product?")) return;
+            const { error } = await supabaseClient
+                .from('products')
+                .delete()
+                .eq('prod-id', id);
+            if (error) alert("Delete failed: " + error.message);
+            else await loadProducts();
         }
 
-        function loadAndRender() {
-            const products = JSON.parse(localStorage.getItem('cartifyProducts')) || [];
-            const body = document.getElementById("productBody");
-            body.innerHTML = "";
-            products.forEach(p => {
-                body.innerHTML += `<tr><td>#${p.id}</td><td>${p.name}</td><td>${p.price}</td><td>${p.stock}</td><td><button onclick="removeProduct(${p.id})" style="color:red; border:none; background:none; cursor:pointer;"><i class="fas fa-trash"></i></button></td></tr>`;
-            });
-        }
-
-        function removeProduct(id) {
-            let products = JSON.parse(localStorage.getItem('cartifyProducts')) || [];
-            products = products.filter(p => p.id !== id);
-            localStorage.setItem('cartifyProducts', JSON.stringify(products));
-            loadAndRender();
-            updateChart();
-        }
-
+        // ---------- Chart ----------
         function initChart() {
             const ctx = document.getElementById('inventoryChart').getContext('2d');
-            const products = JSON.parse(localStorage.getItem('cartifyProducts')) || [];
+            if (myChart) myChart.destroy();
             myChart = new Chart(ctx, {
                 type: 'bar',
-                data: {
-                    labels: products.map(p => p.name),
-                    datasets: [{ label: 'Stock Levels', data: products.map(p => p.stock), backgroundColor: '#FF6B35' }]
-                },
-                options: { maintainAspectRatio: false }
+                data: { labels: [], datasets: [{ label: 'Stock Levels', data: [], backgroundColor: '#FF6B35' }] },
+                options: {
+                    maintainAspectRatio: false,
+                    responsive: true,
+                    scales: { y: { beginAtZero: true, ticks: { stepSize: 1, precision: 0 } } }
+                }
             });
         }
 
-        function updateChart() {
-            const products = JSON.parse(localStorage.getItem('cartifyProducts')) || [];
-            myChart.data.labels = products.map(p => p.name);
-            myChart.data.datasets[0].data = products.map(p => p.stock);
+        function updateChart(products) {
+            if (!myChart) return;
+            const labels = products.map(p => p.name);
+            const stockData = products.map(p => p.stock ?? 0);
+            myChart.data.labels = labels;
+            myChart.data.datasets[0].data = stockData;
             myChart.update();
         }
+
+        // ---------- UI Helpers ----------
+        function toggleView(view) {
+            const total = document.getElementById('totalItemsTable');
+            const carts = document.getElementById('activeCartsTable');
+            if (view === 'totalItems') {
+                total.className = 'visible';
+                carts.className = 'hidden';
+            } else {
+                total.className = 'hidden';
+                carts.className = 'visible';
+            }
+        }
+        function openModal() { document.getElementById('productModal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('productModal').style.display = 'none'; }
     </script>
 </body>
 </html>
